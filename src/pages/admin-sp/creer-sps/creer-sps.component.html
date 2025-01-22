@@ -1,0 +1,46 @@
+<!-- start side bar -->
+<app-side-bar [isOpen] = "isOpen" [items] = "sidebarItems"></app-side-bar>
+<!-- end sidebar -->
+
+<!-- start min top nav -->
+<app-nav-bar (toggle)="isOpen = !isOpen"></app-nav-bar>
+<!-- end min top nav -->
+
+<!-- start main -->
+<main [ngClass]="{'md:ml-64 md:w-[calc(100%-256px)]': isOpen, 'md:ml-0': !isOpen}" class="bg-gray-100 duration-500 w-full h-svh pt-16 overflow-y-scroll">
+
+    <!-- start account-creation-form -->
+    <section class="p-4 mt-4 text-black">
+        <div class="flex items-center justify-start gap-4 mt-3 mb-8">
+            <i class="pi pi-users text-gray-500 shadow-lg rounded-lg text-3xl p-2 "></i>
+            <h2 class="mb-2 text-3xl">gestion les structures pédagogiques</h2>
+        </div>
+
+        <div class="rounded-xl bg-white p-4 mt-4">
+            <h1 class="mb-2 text-3xl">créer des comptes</h1>
+            <select [(ngModel)]="typeForm" name="typeForm" class="w-full sm:w-4/12  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                <option value="filiere" name="filiere">filiere</option>
+                <option value="niveau" name="niveau" >niveau</option>
+                <option value="module" name="module">module</option>
+                <option value="element" name="element">element</option>
+            </select>
+
+            <div *ngIf="typeForm === 'niveau'">
+                <app-niveau-form />
+            </div>
+            <div *ngIf="typeForm == 'filiere'">
+                <app-filiere-form />
+            </div>
+            <div *ngIf="typeForm === 'module'">
+                <app-module-form />
+            </div>
+            <div *ngIf="typeForm === 'element'">
+                <app-element-form />
+            </div>
+        </div>
+    </section>
+    <!-- end account-creation-form -->
+
+    <!-- <app-accounts-crud></app-accounts-crud> -->
+</main>
+<!-- end main -->

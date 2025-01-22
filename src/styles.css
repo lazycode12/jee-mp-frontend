@@ -1,5 +1,13 @@
+@import "primeicons/primeicons.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "primeicons/primeicons.css";
+@layer base {
+    input {
+      @apply bg-white;
+    }
+  }
+
+

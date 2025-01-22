@@ -1,13 +1,12 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-side-bar',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css'
+    selector: 'app-side-bar',
+    imports: [NgClass, RouterLink, RouterLinkActive, NgFor],
+    templateUrl: './side-bar.component.html',
+    styleUrl: './side-bar.component.css'
 })
 export class SideBarComponent {
 

@@ -1,0 +1,40 @@
+<form [formGroup]="fg" (ngSubmit)="onSubmit()" class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <!-- intitule -->
+      <div>
+        <label class="block mb-2 text-sm font-medium" for="">intitulé</label>
+        <input type="text" formControlName="intitule" name="intitule"
+          class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <!-- alias -->
+      <div>
+        <label class="block mb-2 text-sm font-medium" for="">alias</label>
+        <input type="text" formControlName="alias" name="alias"
+          class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <!-- année d’accréditation -->
+      <div>
+        <label class="block mb-2 text-sm font-medium" for="">année d’accréditation</label>
+        <input type="text" formControlName="annee_accreditation" name="annee_accreditation"
+          class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+      <!-- année de fin d’accréditation-->
+      <div>
+        <label class="block mb-2 text-sm font-medium" for="">année de fin d’accréditation</label>
+        <input type="text" formControlName="annee_fin_accreditation" name="annee_fin_accreditation"
+          class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        />
+      </div>
+
+    </div>
+    <button type="submit" class="w-full mt-5 rounded-md bg-blue-600 text-center py-3 text-white">
+      Créer
+    </button>
+  </form>
+  <!-- <p-toast></p-toast> -->
