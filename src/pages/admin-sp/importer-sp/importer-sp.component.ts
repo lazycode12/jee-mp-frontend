@@ -8,8 +8,7 @@ import { ButtonModule } from 'primeng/button';
 @Component({
     selector: 'app-importer-sp',
     imports: [NgClass, NavBarComponent, SideBarComponent,ButtonModule ],
-    templateUrl: './importer-sp.component.html',
-    styleUrl: './importer-sp.component.css'
+    templateUrl: './importer-sp.component.html'
 })
 export class ImporterSPComponent {
 

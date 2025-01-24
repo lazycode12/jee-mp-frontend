@@ -1,0 +1,106 @@
+<!-- start side bar -->
+<app-side-bar [isOpen] = "isOpen" [items] = "sidebarItems"></app-side-bar>
+<!-- end sidebar -->
+
+<!-- start min top nav -->
+<app-nav-bar (toggle)="isOpen = !isOpen"></app-nav-bar>
+<!-- end min top nav -->
+
+<!-- start main -->
+<main [ngClass]="{'md:ml-64 md:w-[calc(100%-256px)]': isOpen, 'md:ml-0': !isOpen}" class="bg-gray-100 duration-500 w-full h-svh pt-16 overflow-y-scroll">
+
+    <!-- start account-creation-form -->
+    <section class="p-4 mt-4 text-black">
+        <div class="flex items-center justify-start gap-4 mt-3 mb-8">
+            <i class="pi pi-users text-gray-500 shadow-lg rounded-lg text-3xl p-2 "></i>
+            <h2 class="mb-2 text-3xl">gestion des personnes</h2>
+        </div>
+
+        <div class="rounded-xl bg-white p-4 mt-4">
+            <h1 class="mb-2 text-3xl">créer des personnes</h1>
+            <p-button (onClick)="showDialog()" label="créer" icon="pi pi-arrow-up-right" severity="success" />
+        </div>
+
+        <div class="rounded-xl bg-white p-4 mt-4">
+            <table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
+                <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">nom</th>
+                        <th scope="col" class="px-6 py-3">prenom</th>
+                        <th scope="col" class="px-6 py-3">cin</th>
+                        <th scope="col" class="px-6 py-3">email</th>
+                        <th scope="col" class="px-6 py-3">telephone</th>
+                        <th scope="col" class="px-6 py-3">role</th>
+                        <th scope="col" class="px-6 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b">
+                        <td class="px-6 py-4">abde</td>
+                        <td class="px-6 py-4">fahim</td>
+                        <td class="px-6 py-4">u1242</td>
+                        <td class="px-6 py-4">a&#64;a.com</td>
+                        <td class="px-6 py-4">032332423</td>
+
+                        <td class="px-6 py-4">
+                            <p-tag severity="success" value="admin-sp" />
+                        </td>
+
+                        <td class="px-6 py-4">
+                            <p-button  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button>
+                            <p-button  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+                            <p-button  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+    <!-- end account-creation-form -->
+
+    <!-- personne creation form popup -->
+    <p-dialog header="créer un ersonne" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+        <form [formGroup]="fg" (ngSubmit)="onSubmit()"  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-black">
+
+              <!-- nom -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">nom</label>
+                <input type="text" formControlName="nom" name="nom" class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+
+              <!-- prenom -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">prenom</label>
+                <input type="text" formControlName="prenom" name="prenom" class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+
+              <!-- cin -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">cin</label>
+                <input type="text" formControlName="cin" name="cin" class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+
+              <!-- email -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">email</label>
+                <input type="email" formControlName="email" name="email" class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+
+              <!-- tele -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">tele</label>
+                <input type="tel" formControlName="tele" name="tele" class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+
+            </div>
+            <button type="submit" class="w-full mt-5 rounded-md bg-blue-600 text-center py-3 text-white">
+              Créer
+            </button>
+          </form>
+    </p-dialog>
+    <!-- end personne creation form popup -->
+</main>
+<!-- end main -->

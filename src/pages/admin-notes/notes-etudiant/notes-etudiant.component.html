@@ -1,0 +1,112 @@
+<!-- start side bar -->
+<app-side-bar [isOpen] = "isOpen" [items] = "sidebarItems"></app-side-bar>
+<!-- end sidebar -->
+
+<!-- start min top nav -->
+<app-nav-bar (toggle)="isOpen = !isOpen"></app-nav-bar>
+<!-- end min top nav -->
+
+<!-- start main -->
+<main [ngClass]="{'md:ml-64 md:w-[calc(100%-256px)]': isOpen, 'md:ml-0': !isOpen}" class="bg-gray-100 duration-500 w-full h-svh pt-16 overflow-y-scroll">
+
+    <!-- start account-creation-form -->
+    <section class="p-4 mt-4 text-black">
+        <div class="flex items-center justify-start gap-4 mt-3 mb-8">
+            <i class="pi pi-users text-gray-500 shadow-lg rounded-lg text-3xl p-2 "></i>
+            <h2 class="mb-2 text-3xl">consulter les notes d'un etudiant</h2>
+        </div>
+
+        <div class="rounded-xl p-4 mt-4 grid grid-cols-3 gap-4">
+
+            <div>
+                <label class="block mb-2 text-sm font-medium" for="">CNE</label>
+                <input [(ngModel)]="cne" type="text" name="titre"
+                  class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+            <div>
+                <label class="block mb-2 text-sm font-medium" for="">anne d'etude</label>
+                <select [(ngModel)]="anne_etude" name="typeForm" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    <option value="filiere" name="filiere">2019/2020</option>
+                    <option value="niveau" name="niveau" >2020/2021</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block mb-2 text-sm font-medium" for="">module</label>
+                <select [(ngModel)]="module" name="typeForm" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    <option value="filiere" name="filiere">module 1</option>
+                    <option value="niveau" name="niveau" >module 2</option>
+                </select>
+            </div>
+
+            <div>
+                <p-checkbox (ngModelChange)="checkedf()" [(ngModel)]="checked" [binary]="true" inputId="tm" />
+                <label for="tm" class="ml-2">tous les modules</label>
+            </div>
+        </div>
+
+        <div class="rounded-xl p-4 mt-4">
+            <p-button label="consulter"  icon="pi pi-eye" iconPos="right" [rounded]="true" [raised]="true" />
+        </div>
+
+        <!-- one module -->
+        <div class="rounded-xl bg-white p-4 mt-4">
+            <table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
+                <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">nom</th>
+                        <th scope="col" class="px-6 py-3">prenom</th>
+                        <th scope="col" class="px-6 py-3">cne</th>
+                        <th scope="col" class="px-6 py-3">module</th>
+                        <th scope="col" class="px-6 py-3">note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b">
+                        <td class="px-6 py-4">abde</td>
+                        <td class="px-6 py-4">fahim</td>
+                        <td class="px-6 py-4">m423432</td>
+                        <td class="px-6 py-4">m111</td>
+                        <td class="px-6 py-4">03</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- all modules -->
+        <div class="rounded-xl bg-white p-4 mt-4">
+            <div class="w-[20%] grid grid-cols-2 gap-2 mb-4">
+                <span class="font-bold">nom: </span>
+                <span>abde</span>
+                <span class="font-bold">prenom</span>
+                <span>fahim</span>
+                <span class="font-bold">cne</span>
+                <span>m255434324</span>
+            </div>
+            <table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
+                <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">module</th>
+                        <th scope="col" class="px-6 py-3">note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b">
+                        <td class="px-6 py-4">m111</td>
+                        <td class="px-6 py-4">01</td>
+                    </tr>
+                    <tr class="bg-white border-b">
+                        <td class="px-6 py-4">m121</td>
+                        <td class="px-6 py-4">03</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+<!-- end main -->
