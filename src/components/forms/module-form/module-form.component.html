@@ -1,4 +1,4 @@
-<form [formGroup]="fg" (ngSubmit)="onSubmit()"   class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+<form [formGroup]="fg" (ngSubmit)="creerModule($event)"   class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <!-- titre -->
       <div>
@@ -42,4 +42,4 @@
       Créer
     </button>
   </form>
-  <!-- <p-toast></p-toast> -->
+  <p-toast />

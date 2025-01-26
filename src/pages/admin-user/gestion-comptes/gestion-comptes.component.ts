@@ -7,24 +7,27 @@ import { SideBarDataServiceService } from '../../../services/side-bar-data-servi
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-gestion-personnes',
-  imports: [SideBarComponent, NavBarComponent, NgClass, FormsModule, Dialog, ButtonModule, ReactiveFormsModule, TagModule],
-  templateUrl: './gestion-comptes.component.html'
+  imports: [ConfirmDialog,ToastModule,SideBarComponent, NavBarComponent, NgClass, FormsModule, Dialog, ButtonModule, ReactiveFormsModule, TagModule],
+  templateUrl: './gestion-comptes.component.html',
+  providers: [MessageService, ConfirmationService]
 })
 export class GestionComptesComponent {
+
   sidebarItems: any = [];
   isOpen: boolean = true;
-  visible: boolean = false;
-
-  // show popup
-  edit() {
-    this.visible = true;
-  }
+  visible_view: boolean = false;
+  visible_edit: boolean = false;
 
   // services
   sideBarService: SideBarDataServiceService = inject(SideBarDataServiceService);
+  messageService :  MessageService = inject( MessageService);
+  confirmationService: ConfirmationService = inject(ConfirmationService);
 
   //ngOnInit function
   ngOnInit(){
@@ -32,16 +35,32 @@ export class GestionComptesComponent {
   }
 
   fg = new FormGroup({
-    nom : new FormControl(""),
-    prenom : new FormControl(""),
-    cin : new FormControl(""),
-    email : new FormControl(""),
-    tele : new FormControl("")
+    role : new FormControl(""),
+    login: new FormControl(""),
+    password : new FormControl(""),
+    active : new FormControl(""),
+    locked : new FormControl("")
 
   })
 
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.fg.value);
+  showEditDialog(){
+    this.visible_edit = true;
   }
+
+  showCompte(){
+    this.visible_view = true;
+  }
+
+  edit(e:Event) {
+
+  }
+
+  create(){
+
+  }
+
+  supprimerCompte(id:number){
+
+  }
+
 }

@@ -7,25 +7,32 @@ import { SideBarDataServiceService } from '../../../services/side-bar-data-servi
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { HttpService } from '../../../services/http.service';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-gestion-personnes',
-  imports: [SideBarComponent, NavBarComponent, NgClass, FormsModule, Dialog, ButtonModule, ReactiveFormsModule, TagModule],
-  templateUrl: './gestion-personnes.component.html'
+  imports: [ConfirmDialog, ToastModule, SideBarComponent, NavBarComponent, NgClass, FormsModule, Dialog, ButtonModule, ReactiveFormsModule, TagModule],
+  templateUrl: './gestion-personnes.component.html',
+  providers: [MessageService, ConfirmationService]
 })
 export class GestionPersonnesComponent {
 
   sidebarItems: any = [];
   isOpen: boolean = true;
-  visible: boolean = false;
-
-  // show popup
-  showDialog() {
-    this.visible = true;
-  }
+  visible_create: boolean = false;
+  selectedPersonne: any;
+  visible_edit: boolean = false;
+  visible_view: boolean = false;
+  visible_associate: boolean = false;
 
   // services
   sideBarService: SideBarDataServiceService = inject(SideBarDataServiceService);
+  messageService :  MessageService = inject( MessageService);
+  confirmationService: ConfirmationService = inject(ConfirmationService);
+  httpservice: HttpService = inject(HttpService);
 
   //ngOnInit function
   ngOnInit(){
@@ -41,8 +48,64 @@ export class GestionPersonnesComponent {
 
   })
 
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.fg.value);
+  fg_account = new FormGroup({
+    role : new FormControl(""),
+    active : new FormControl(1),
+    locked : new FormControl(0),
+  })
+
+  deletePersonne(id:number){
+    this.confirmationService.confirm({
+      // target: event.target as EventTarget,
+      message: 'Veuillez confirmer pour continuer',
+      header: 'Confirmation',
+      closable: true,
+      closeOnEscape: true,
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: {
+          label: 'Annuler',
+          severity: 'secondary',
+          outlined: true,
+      },
+      acceptButtonProps: {
+          label: 'supprimer',
+          severity: 'danger',
+      },
+      accept: () => {
+        this.httpservice.deleteMatiere(id).subscribe({
+          next: () => this.messageService.add({ severity: 'info', summary: 'succès', detail: 'la matiere a été supprimé avec succès' }),
+          error: () => this.messageService.add({ severity: 'error', summary: "erreur", detail: "quelque chose s'est mal passé"})
+        })
+      },
+  });
   }
+
+  edit(e: Event){
+
+  }
+
+  create(e: Event){
+
+  }
+
+  // show popup
+  showDialogCreate() {
+    this.visible_create = true;
+  }
+
+  showDialogEdit(){ //takes parameter of type filiere
+    this.visible_edit = true;
+  }
+  showDialogView(){ //takes parameter of type filiere
+    this.visible_view = true;
+  }
+
+  showDialogAssociate(){
+    this.visible_associate = true;
+  }
+
+  associerRole(id:number){
+
+  }
+
 }

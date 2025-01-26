@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NavBarComponent } from '../../../components/nav-bar/nav-bar.component';
 import { SideBarComponent } from '../../../components/side-bar/side-bar.component';
 import { SideBarDataServiceService } from '../../../services/side-bar-data-service.service';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FiliereTableComponent } from '../../../components/crud-tables/filiere-table/filiere-table.component';
@@ -21,7 +21,7 @@ export class GestionSpsComponent {
     sidebarItems: any = [];
     isOpen: boolean = true;
     table: string = "";
-    typeTable: string = "";
+    typeTable: string = "filiere";
 
     // services
     sideBarService: SideBarDataServiceService = inject(SideBarDataServiceService);

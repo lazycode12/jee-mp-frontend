@@ -13,34 +13,14 @@
             <td class="px-6 py-4">GLCC</td>
             <td class="px-6 py-4">GL2</td>
             <td class="px-6 py-4">
-                <p-button  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button>
-                <p-button  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                <p-button  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+                <p-button (onClick)="showDialogView()"  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button>
+                <p-button (onClick)="showDialogEdit()"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+                <p-button (onClick)="deleteNiveau(3)" icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
             </td>
         </tr>
-
-        <tr class="bg-white border-b">
-            <td class="px-6 py-4">GL1</td>
-            <td class="px-6 py-4">GLCC</td>
-            <td class="px-6 py-4">GL2</td>
-            <td class="px-6 py-4">
-                <p-button  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button>
-                <p-button  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                <p-button  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
-            </td>
-        </tr>
-
-        <tr class="bg-white border-b">
-            <td class="px-6 py-4">GL1</td>
-            <td class="px-6 py-4">GLCC</td>
-            <td class="px-6 py-4">GL2</td>
-            <td class="px-6 py-4">
-                <p-button  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button>
-                <p-button  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                <p-button  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
-            </td>
-        </tr>
-
 
     </tbody>
 </table>
+
+<p-toast />
+<p-confirmdialog />
