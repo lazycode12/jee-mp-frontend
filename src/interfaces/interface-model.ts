@@ -1,6 +1,6 @@
 export interface Filiere{
-    id_filiere: number,
-    id_coord: number,
+    id: number,
+    id_coordinateur: number,
     alias: string,
     intitule: boolean,
     anne_accreditation: number,

@@ -6,17 +6,19 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { NgFor } from '@angular/common';
 
 @Component({
 
   selector: 'app-niveau-table',
-  imports: [ButtonModule,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule],
+  imports: [ButtonModule,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule, NgFor],
   templateUrl: './niveau-table.component.html',
   providers: [MessageService, ConfirmationService]})
 export class NiveauTableComponent {
-  selectedNatiere: any;
+
+  selectedNiveau: any;
+  niveaux:any = [];
   visible_edit: boolean = false;
-  visible_view: boolean = false;
 
   //services
   messageService :  MessageService = inject( MessageService);
@@ -24,11 +26,21 @@ export class NiveauTableComponent {
   httpservice: HttpService = inject(HttpService);
 
   fg = new FormGroup({
-    titre : new FormControl(""),
-    code : new FormControl(""),
-    enseignant : new FormControl(""),
-    niveau : new FormControl("")
+    intitule : new FormControl(""),
+    alias : new FormControl(""),
+    id_niveau_suivant: new FormControl(null)
   })
+
+  //ngOnInit function
+  ngOnInit(){
+    this.getNiveaux();
+}
+  getNiveaux(){
+    this.httpservice.getNiveaux().subscribe({
+      next: res => this.niveaux = res
+    })
+  }
+
   deleteNiveau(id:number){
     this.confirmationService.confirm({
       // target: event.target as EventTarget,
@@ -48,7 +60,10 @@ export class NiveauTableComponent {
       },
       accept: () => {
         this.httpservice.deleteNiveau(id).subscribe({
-          next: () => this.messageService.add({ severity: 'info', summary: 'succès', detail: 'le module a été supprimé avec succès' }),
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'succès', detail: 'le module a été supprimé avec succès' });
+            this.getNiveaux();
+        },
           error: () => this.messageService.add({ severity: 'error', summary: "erreur", detail: "quelque chose s'est mal passé"})
         })
       },
@@ -56,13 +71,34 @@ export class NiveauTableComponent {
   }
 
   edit(e: Event){
-
+    e.preventDefault();
+    if(this.fg.get("id_niveau_suivant")?.value != null){
+      this.httpservice.editNiveau(this.selectedNiveau.id,this.fg.value, this.fg.get("id_niveau_suivant")?.value ?? 0 ).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'succès', detail: 'le niveau a été modifier avec succès' });
+          this.getNiveaux();
+          this.visible_edit = false;
+        }
+      })
+    }else{
+      this.httpservice.editNiveau(this.selectedNiveau.id,this.fg.value).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'succès', detail: 'le niveau a été modifier avec succès' });
+          this.getNiveaux();
+          this.visible_edit = false;
+        }
+      })
+    }
   }
 
-  showDialogEdit(){ //takes parameter of type filiere
+  showDialogEdit(niveau:any){
+    let data = {
+      intitule : niveau.intitule,
+      alias : niveau.alias,
+      id_niveau_suivant: niveau.id_niveau_suivant ? niveau.id_niveau_suivant.id : 0
+    }
+    this.selectedNiveau = niveau;
+    this.fg.patchValue(data);
     this.visible_edit = true;
-  }
-  showDialogView(){ //takes parameter of type filiere
-    this.visible_view = true;
   }
 }

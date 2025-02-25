@@ -1,6 +1,7 @@
 import { NgClass, NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-side-bar',
@@ -13,8 +14,11 @@ export class SideBarComponent {
   @Input() isOpen: boolean = false;
   @Input() items: { label: string, link: string, icon: string}[] | undefined;
 
+  //services
+  authService: AuthService = inject(AuthService);
 
-
-  // extract sidebar elements
+  logout(): void{
+    this.authService.logout();
+  }
 
 }

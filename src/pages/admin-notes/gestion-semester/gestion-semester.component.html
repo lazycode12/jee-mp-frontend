@@ -1,0 +1,130 @@
+<!-- start side bar -->
+<app-side-bar [isOpen] = "isOpen" [items] = "sidebarItems"></app-side-bar>
+<!-- end sidebar -->
+
+<!-- start min top nav -->
+<app-nav-bar (toggle)="isOpen = !isOpen"></app-nav-bar>
+<!-- end min top nav -->
+
+<!-- start main -->
+<main [ngClass]="{'md:ml-64 md:w-[calc(100%-256px)]': isOpen, 'md:ml-0': !isOpen}" class="bg-gray-100 duration-500 w-full h-svh pt-16 overflow-y-scroll">
+    <section class="p-4 mt-4 text-black">
+        <div class="flex items-center justify-start gap-4 mt-3 mb-8">
+            <i class="pi pi-users text-gray-500 shadow-lg rounded-lg text-3xl p-2 "></i>
+            <h2 class="mb-2 text-3xl">gestion des semestres</h2>
+        </div>
+
+        <div class="rounded-xl bg-white p-4 mt-4">
+            <h1 class="mb-2 text-3xl">créer des semestres</h1>
+            <p-button (onClick)="showDialogCreate()" label="créer" icon="pi pi-arrow-up-right" severity="success" />
+        </div>
+
+        <div class="rounded-xl bg-white p-4 mt-4">
+            <table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
+                <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">semester</th>
+                        <th scope="col" class="px-6 py-3">session</th>
+                        <th scope="col" class="px-6 py-3">anne etude</th>
+                        <th scope="col" class="px-6 py-3">actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let semester of semestres" class="bg-white border-b">
+                        <td class="px-6 py-4">{{semester.semester}}</td>
+                        <td class="px-6 py-4">{{semester.session}}</td>
+                        <td class="px-6 py-4">{{semester.anneEtude}}</td>
+
+                        <td class="px-6 py-4">
+                            <p-button (onClick)="showDialogEdit(semester)"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+                            <p-button (onClick)="deleteSemester(semester.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <!-- semester creation form popup -->
+    <p-dialog header="créer un personne" [modal]="true" [(visible)]="visible_create" [style]="{ width: '25rem' }">
+        <form [formGroup]="fg" (ngSubmit)="create($event)"  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+            <div class="grid grid-cols-2 gap-5 text-black">
+
+              <!-- semester -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">semester</label>
+                <select formControlName="semester" name="semester" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                  <option value="printemps" name="filiere">printemps</option>
+                  <option value="L’automne" name="niveau" >L’automne</option>
+              </select>
+              </div>
+
+              <!-- session -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">session</label>
+                <select formControlName="session" name="session" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                  <option value="normal" name="filiere">normal</option>
+                  <option value="rattrapage" name="niveau" >rattrapage</option>
+              </select>
+              </div>
+
+              <!-- anne etude -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">anne etude</label>
+                <input type="text" formControlName="anneEtude" name="anne etude" class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+
+            </div>
+            <button type="submit" class="w-full mt-5 rounded-md bg-blue-600 text-center py-3 text-white">
+              Créer
+            </button>
+          </form>
+    </p-dialog>
+    <!-- end personne creation form popup -->
+
+    <!-- personne modification form popup -->
+    <p-dialog header="modifier un personne" [modal]="true" [(visible)]="visible_edit" [style]="{ width: '25rem' }">
+        <form [formGroup]="fg" (ngSubmit)="edit($event)"  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-black">
+
+              <!-- semester -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">semester</label>
+                <select formControlName="semester" name="semester" class="w-full sm:w-4/12  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                  <option value="printemps" name="filiere">printemps</option>
+                  <option value="L’automne" name="niveau" >L’automne</option>
+              </select>
+              </div>
+
+
+              <!-- session -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">session</label>
+                <select formControlName="session" name="session" class="w-full sm:w-4/12  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                  <option value="normal" name="filiere">normal</option>
+                  <option value="rattrapage" name="niveau" >rattrapage</option>
+              </select>
+              </div>
+
+              <!-- anne etude -->
+              <div>
+                <label class="block mb-2 text-sm font-medium" for="">anne etude</label>
+                <input type="text" formControlName="anneEtude" name="anne etude" class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"/>
+              </div>
+
+
+            </div>
+            <button type="submit" class="w-full mt-5 rounded-md bg-blue-600 text-center py-3 text-white">
+              modifier
+            </button>
+          </form>
+    </p-dialog>
+    <!-- end personne creation form popup -->
+
+    <p-toast />
+    <p-confirmdialog />
+
+</main>
+<!-- end main -->

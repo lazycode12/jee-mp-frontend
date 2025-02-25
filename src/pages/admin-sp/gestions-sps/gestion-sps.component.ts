@@ -22,6 +22,7 @@ export class GestionSpsComponent {
     isOpen: boolean = true;
     table: string = "";
     typeTable: string = "filiere";
+    filieres: any = [];
 
     // services
     sideBarService: SideBarDataServiceService = inject(SideBarDataServiceService);

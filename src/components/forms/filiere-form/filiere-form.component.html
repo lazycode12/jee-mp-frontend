@@ -1,9 +1,9 @@
-<form [formGroup]="fg" (ngSubmit)="creerFeliere($event)" class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+<form (ngSubmit)="creerFeliere($event)" class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <!-- intitule -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">intitulé</label>
-        <input type="text" formControlName="intitule" name="intitule"
+        <input type="text" [(ngModel)]="intitule" name="intitule"
           class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
@@ -11,7 +11,7 @@
       <!-- alias -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">alias</label>
-        <input type="text" formControlName="alias" name="alias"
+        <input type="text" [(ngModel)]="alias" name="alias"
           class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
@@ -19,7 +19,7 @@
       <!-- année d’accréditation -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">année d’accréditation</label>
-        <input type="text" formControlName="annee_accreditation" name="annee_accreditation"
+        <input type="text" [(ngModel)]="annee_accreditation" name="annee_accreditation"
           class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
@@ -27,9 +27,16 @@
       <!-- année de fin d’accréditation-->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">année de fin d’accréditation</label>
-        <input type="text" formControlName="annee_fin_accreditation" name="annee_fin_accreditation"
+        <input type="text" [(ngModel)]="annee_fin_accreditation" name="annee_fin_accreditation"
           class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
+      </div>
+
+      <div>
+        <label class="block mb-2 text-sm font-medium" for="">coordinateur</label>
+        <select [(ngModel)]="id_cord"  name="id_cord" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option *ngFor="let enseignant of enseignants" [value]="enseignant.id" name="student">{{enseignant.prenom + " " + enseignant.nom}}</option>
+        </select>
       </div>
 
     </div>

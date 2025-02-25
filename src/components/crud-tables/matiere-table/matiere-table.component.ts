@@ -6,15 +6,17 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-matiere-table',
-  imports: [ButtonModule,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule],
+  imports: [ButtonModule,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule, NgFor],
   templateUrl: './matiere-table.component.html',
   providers: [MessageService, ConfirmationService]
 })
 export class MatiereTableComponent {
 
+  matieres: any = [];
   selectedNatiere: any;
   visible_edit: boolean = false;
   visible_view: boolean = false;
@@ -25,9 +27,14 @@ export class MatiereTableComponent {
   httpservice: HttpService = inject(HttpService);
 
   fg = new FormGroup({
-    titre : new FormControl(""),
-    module : new FormControl("")
+    titre : new FormControl("")
   })
+
+  getMatieres(){
+    this.httpservice.getMatieres().subscribe({
+      next: (res) => this.matieres = res
+    })
+  }
 
   deleteMatiere(id:number){
     this.confirmationService.confirm({
@@ -48,7 +55,7 @@ export class MatiereTableComponent {
       },
       accept: () => {
         this.httpservice.deleteMatiere(id).subscribe({
-          next: () => this.messageService.add({ severity: 'info', summary: 'succès', detail: 'la matiere a été supprimé avec succès' }),
+          next: () => this.messageService.add({ severity: 'success', summary: 'succès', detail: 'la matiere a été supprimé avec succès' }),
           error: () => this.messageService.add({ severity: 'error', summary: "erreur", detail: "quelque chose s'est mal passé"})
         })
       },
@@ -56,13 +63,23 @@ export class MatiereTableComponent {
   }
 
   edit(e: Event){
-
+    this.httpservice.editMatiere(this.selectedNatiere.id, this.fg.value).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'succès', detail: 'la matiere a été modifier avec succès' });
+        this.getMatieres();
+        this.visible_edit = false;
+    },
+      error: (err) => console.log(err)
+    })
   }
 
-  showDialogEdit(){ //takes parameter of type filiere
+  showDialogEdit(matiere:any){
+    this.selectedNatiere = matiere;
+    this.fg.patchValue({titre: matiere.titre})
     this.visible_edit = true;
   }
-  showDialogView(){ //takes parameter of type filiere
-    this.visible_view = true;
+
+  ngOnInit(){
+    this.getMatieres();
   }
 }

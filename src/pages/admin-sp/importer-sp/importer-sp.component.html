@@ -22,12 +22,13 @@
                 <div class="  p-4 rounded-lg  border border-gray-300 bg-white">
                     <h3 class="font-medium mb-4 text-black">choisir un fichier (.csv)</h3>
                     <div class="flex justify-start items-center gap-4 ">
-                            <input class="block w-1/3 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none" type="file">
-                            <p-button label="importer" icon="pi pi-upload" iconPos="right" size="small"></p-button>
+                            <input (change)="onFileChange($event)" class="block w-1/3 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none" type="file">
+                            <p-button (onClick)="importer_sp()" label="importer" icon="pi pi-upload" iconPos="right" size="small"></p-button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <p-toast />
 </main>
 <!-- end main -->

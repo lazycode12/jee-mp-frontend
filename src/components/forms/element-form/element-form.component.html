@@ -1,9 +1,9 @@
-<form [formGroup]="fg" (ngSubmit)="creerElement($event)"  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<form (ngSubmit)="creerElement($event)"  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+    <div class="grid grid-cols-2 gap-5">
       <!-- titre matiere -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">titre</label>
-        <input type="text" formControlName="titre" name="titre"
+        <input [(ngModel)]="titre" type="text" name="titre"
           class="block w-full p-2.5 text-sm bg-white border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
@@ -11,10 +11,16 @@
       <!-- module de cette matière -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">module</label>
-        <select formControlName="module"  name="module" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5">
-            <option value="module 1" name="student"  selected>module 1</option>
-            <option value="module 2" name="teacher" >module 2</option>
-            <option value="module 3" name="resp">module 3</option>
+        <select [(ngModel)]="module_id"  name="module_id" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option *ngFor="let enseignant of enseignants" [value]="enseignant.id">{{enseignant.nom + " " + enseignant.prenom}}</option>
+        </select>
+      </div>
+
+      <!-- emseignant de cette matière -->
+      <div>
+        <label class="block mb-2 text-sm font-medium" for="">enseignant</label>
+        <select [(ngModel)]="enseignant_id"  name="enseignant_id" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option *ngFor="let module of modules" [value]="module.id">{{module.titre + " (" + module.code + ")"}}</option>
         </select>
       </div>
 

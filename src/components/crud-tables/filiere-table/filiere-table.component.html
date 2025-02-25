@@ -1,53 +1,41 @@
 <table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
     <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
-        <tr>
+        <tr >
             <th scope="col" class="px-6 py-3">intitulé</th>
             <th scope="col" class="px-6 py-3">alias</th>
             <th scope="col" class="px-6 py-3">année d’accréditation</th>
             <th scope="col" class="px-6 py-3">année de fin d’accréditation</th>
+            <th scope="col" class="px-6 py-3">coordinateur</th>
+            <th scope="col" class="px-6 py-3">x</th>
+            <th scope="col" class="px-6 py-3">y</th>
             <th scope="col" class="px-6 py-3">Actions</th>
         </tr>
     </thead>
     <tbody>
-        <tr class="bg-white border-b">
-            <td class="px-6 py-4">filiere 1</td>
-            <td class="px-6 py-4">GLCC</td>
-            <td class="px-6 py-4">2018</td>
-            <td class="px-6 py-4">2019</td>
+        <tr *ngFor="let filiere of filieres" class="bg-white border-b">
+            <td class="px-6 py-4">{{filiere.intitule}}</td>
+            <td class="px-6 py-4">{{filiere.alias}}</td>
+            <td class="px-6 py-4">{{filiere.anne_accreditation}}</td>
+            <td class="px-6 py-4">{{filiere.anne_fin_accreditation}}</td>
+            @if(filiere.coordinateur != null){
+                <td class="px-6 py-4">{{filiere.coordinateur.nom + " " + filiere.coordinateur.prenom}}</td>
+            }@else {
+            <td class="px-6 py-4">-</td>
+            }
+            <td class="px-6 py-4">{{filiere.x}}</td>
+            <td class="px-6 py-4">{{filiere.y}}</td>
             <td class="px-6 py-4">
-                <p-button (onClick)="showDialogView()"  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button>
-                <p-button (onClick)="showDialogEdit()"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                <p-button (onClick)="deleteFiliere(8)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+                <!-- <p-button (onClick)="showDialogView()"  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button> -->
+                <p-button (onClick)="showDialogEdit(filiere)"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+                <p-button (onClick)="deleteFiliere(filiere.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
             </td>
         </tr>
     </tbody>
 </table>
 
 
-<!-- show filiere -->
-<p-dialog header="voir" class="text-center" [modal]="true" [(visible)]="visible_view" [style]="{width: '40vh'}" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
-    <div class="grid grid-cols-2">
-        <div class="flex justify-center text-left">
-            <div>
-                <span class="block mb-3 font-semibold">intitulé</span>
-                <span class="block mb-3 font-semibold">alias</span>
-                <span class="block mb-3 font-semibold">année d’accréditation</span>
-                <span class="block mb-3 font-semibold">année de fin d’accréditation</span>
-            </div>
-        </div>
-        <div class="flex justify-center text-left">
-            <div>
-                <span class="block mb-3"></span>
-                <span class="block mb-3"></span>
-                <span class="block mb-3"></span>
-                <span class="block mb-3"></span>
-            </div>
-        </div>
-    </div>
-</p-dialog>
-
 <!-- edit filiere -->
-<p-dialog header="modifier" class="text-center" [modal]="true" [(visible)]="visible_edit" [style]="{width: '40vh'}" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+<p-dialog header="modifier" class="text-center" [modal]="true" [(visible)]="visible_edit" [style]="{width: '30rem'}" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
  <!-- edit form -->
  <div class="flex justify-center text-left ">
      <form [formGroup]="fg" class="w-full" (ngSubmit)="edit($event)">
@@ -75,6 +63,18 @@
                  <div>
                     <label class="block mb-2 text-sm font-medium" for="">année de fin d’accréditation</label>
                     <input type="text" formControlName = "annee_fin_accreditation" class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                 <!-- x -->
+                 <div>
+                    <label class="block mb-2 text-sm font-medium" for="">année de fin d’accréditation</label>
+                    <input type="number" formControlName = "x" class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                 <!-- y -->
+                 <div>
+                    <label class="block mb-2 text-sm font-medium" for="">y</label>
+                    <input type="number" formControlName = "y" class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
              </div>

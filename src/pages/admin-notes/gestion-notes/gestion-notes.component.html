@@ -36,75 +36,52 @@
 
     <!-- # exporter notes de module dialog -->
     <p-dialog header="exporter fichier de collecte des notes par module" [modal]="true" [(visible)]="export_notes_module_v" [style]="{ width: '25rem' }">
-        <form (ngSubmit)="exporter_fichier_module()"  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+        <form class="w-full p-4 border border-gray-300 bg-white" method="post">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-black">
 
               <!-- session -->
               <div>
-                <label class="block mb-2 text-sm font-medium" for="">session</label>
-                <select name="typeForm" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                    <option value="1">normale</option>
-                    <option value="0">rattrapge</option>
-                </select>
-              </div>
-
-              <!--  filiere  -->
-              <div>
-                <label class="block mb-2 text-sm font-medium" for="">filiere</label>
-                <select name="typeForm" class="w-full  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                    <option value="1" name="filiere">filiere 1</option>
-                    <option value="0" name="niveau" >filiere 2</option>
+                <label class="block mb-2 text-sm font-medium" for="">semester et session</label>
+                <select [(ngModel)]="id_semester" name="id_semester" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    <option *ngFor="let semester of semestres" [value]="semester.id">{{semester.semester + "  " +semester.session + "  "+semester.anneEtude}}</option>
                 </select>
               </div>
 
               <!-- niveau -->
               <div>
                 <label class="block mb-2 text-sm font-medium" for="">niveau</label>
-                <select name="typeForm" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                    <option value="1" name="filiere">niveau 1</option>
-                    <option value="0" name="niveau" >niveau 2</option>
+                <select [(ngModel)]="id_niveau" name="id_niveau" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    <option *ngFor="let niveau of niveaux" [value]="niveau.id">{{niveau.intitule}}</option>
                 </select>
               </div>
 
               <!-- module -->
               <div>
                 <label class="block mb-2 text-sm font-medium" for="">module</label>
-                <select name="typeForm" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                    <option value="1" name="filiere">module 1</option>
-                    <option value="0" name="niveau" >module 2</option>
+                <select [(ngModel)]="id_module" name="id_module" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    <option *ngFor="let module of modules" [value]="module.id">{{module.titre}}</option>
                 </select>
               </div>
 
             </div>
-            <p-button [style]="{'width':'100%'}" label="exporter" icon="pi pi-file-export" iconPos="right" size="small" />
+            <p-button (onClick)="exportCollectNotes()" [style]="{'width':'100%'}" label="exporter" icon="pi pi-file-export" iconPos="right" size="small" />
         </form>
     </p-dialog>
 
     <!-- # exporter notes de deliberation -->
     <p-dialog header=" fichier de collecte des notes de délibération finale" [modal]="true" [(visible)]="export_notes_deli_v" [style]="{ width: '25rem' }">
-        <form (ngSubmit)="exporter_fichier_deli()"  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-black">
-
-              <!-- filiere -->
-              <div>
-                <label class="block mb-2 text-sm font-medium" for="">filiere</label>
-                <select name="typeForm" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                    <option value="1">filiere 1</option>
-                    <option value="0">filiere 2/option>
-                </select>
-              </div>
-
+        <form  class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+            <div class="grid grid-cols-1 gap-5 text-black">
               <!--  niveau  -->
               <div>
                 <label class="block mb-2 text-sm font-medium" for="">niveau</label>
-                <select name="typeForm" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                    <option value="1" name="filiere">niveau 1</option>
-                    <option value="0" name="niveau" >niveau 2</option>
+                <select [(ngModel)]="id_niveau_deli" name="id_niveau_deli" class="w-full mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    <option *ngFor="let niveau of niveaux" [value]="niveau.id" name="niveau_id">{{niveau.intitule}}</option>
                 </select>
               </div>
 
             </div>
-            <p-button [style]="{'width':'100%'}" label="exporter" icon="pi pi-file-export" iconPos="right" size="small" />
+            <p-button (onClick)="exporter_fichier_deli()" [style]="{'width':'100%'}" label="exporter" icon="pi pi-file-export" iconPos="right" size="small" />
         </form>
     </p-dialog>
 
@@ -112,18 +89,19 @@
     <p-dialog header="importer fichier de collecte des notes par module" [modal]="true" [(visible)]="import_notes_module_v" [style]="{ width: '25rem' }">
       <h3 class="font-medium mb-4 text-red-600">choisir un fichier (.csv)</h3>
       <div class="grid grid-cols-1 gap-5 text-black">
-        <input class="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none" type="file">
-        <p-button [style]="{'width':'100%'}" label="importer" icon="pi pi-upload" iconPos="right" size="small" />
+        <input (change)="onImportCollectNotesFileChange($event)" class="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none" type="file">
+        <p-button (onClick)="importCollectNotes()" [style]="{'width':'100%'}" label="importer" icon="pi pi-upload" iconPos="right" size="small" />
       </div>
     </p-dialog>
 
     <!-- # importer notes de deliberation dialog -->
-    <p-dialog header="importer fichier de collecte des notes par module" [modal]="true" [(visible)]="import_notes_deli_v" [style]="{ width: '25rem' }">
+    <p-dialog header="importer fichier de collecte des notes de deliberation" [modal]="true" [(visible)]="import_notes_deli_v" [style]="{ width: '25rem' }">
       <h3 class="font-medium mb-4 text-red-600">choisir un fichier (.csv)</h3>
       <div class="grid grid-cols-1 gap-5 text-black">
-        <input class="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none" type="file">
-        <p-button [style]="{'width':'100%'}" label="importer" icon="pi pi-upload" iconPos="right" size="small" />
+        <input (change)="onImportCollectNotesDeliFileChange($event)" class="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none" type="file">
+        <p-button (onClick)="importDeliNotes()" [style]="{'width':'100%'}" label="importer" icon="pi pi-upload" iconPos="right" size="small" />
       </div>
     </p-dialog>
+    <p-toast />
 </main>
 <!-- end main -->

@@ -1,40 +1,63 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Toast, ToastModule } from 'primeng/toast';
 import { HttpService } from '../../../services/http.service';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-element-form',
-  imports: [ReactiveFormsModule, ToastModule],
-  templateUrl: './element-form.component.html'
+  imports: [FormsModule, ToastModule, NgFor],
+  templateUrl: './element-form.component.html',
+  providers: [MessageService]
 })
 export class ElementFormComponent {
+
+  modules: any = [];
+  enseignants: any = [];
+  titre: string = "";
+  module_id: number = 0;
+  enseignant_id: number = 0;
 
   constructor(private http : HttpClient){
 
   }
-  fg = new FormGroup({
-    titre : new FormControl(""),
-    module : new FormControl("")
-  })
 
   //services
-  MessageService :  MessageService = inject( MessageService);
+  messageService :  MessageService = inject( MessageService);
   httpService: HttpService = inject(HttpService);
 
+  getModules(){
+    this.httpService.getModules().subscribe({
+      next: (res) => this.modules = res
+    });
+  }
+
+  getEnseignants(){
+    this.httpService.getEnseignants().subscribe({
+      next: (res) => this.enseignants = res
+    });
+  }
+
   creerElement(e: Event) {
-    // console.warn(this.fg.value);
     e.preventDefault();
-    this.httpService.creerMatiere(this.fg.value).subscribe({
+    let data = {
+      titre: this.titre
+    }
+    this.httpService.creerMatiere(data, this.module_id, this.enseignant_id).subscribe({
       next: res => {
-        this.MessageService.add({ severity: 'success', summary: 'succès', detail: 'La matière a été créée avec succès', life: 2000 })
-        this.fg.reset();
+        this.messageService.add({ severity: 'success', summary: 'succès', detail: 'La matière a été créée avec succès', life: 2000 })
+        this.titre = "";
       },
       error: err => {
-        this.MessageService.add({ severity: 'danger', summary: 'erreur', detail: "quelque chose s'est mal passé", life: 2000 })
+        this.messageService.add({ severity: 'danger', summary: 'erreur', detail: "quelque chose s'est mal passé", life: 2000 })
       }
     })
+  }
+
+  ngOnInit(){
+    this.getModules();
+    this.getEnseignants();
   }
 }

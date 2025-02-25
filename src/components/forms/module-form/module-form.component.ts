@@ -1,21 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { HttpService } from '../../../services/http.service';
 import { Toast } from 'primeng/toast';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-module-form',
-  imports: [ReactiveFormsModule, Toast ],
-  templateUrl: './module-form.component.html'
+  imports: [FormsModule, Toast, NgFor],
+  templateUrl: './module-form.component.html',
+  providers: [MessageService]
 })
 export class ModuleFormComponent {
-  fg = new FormGroup({
-    titre : new FormControl(""),
-    code : new FormControl(""),
-    enseignant : new FormControl(""),
-    niveau : new FormControl("")
-  })
+  resps: any = [];
+  niveaux: any = [];
+  titre: string = "";
+  code: string = "";
+  id_resp: number = 0;
+  id_niveau:number = 0;
 
   //services
   MessageService :  MessageService = inject( MessageService);
@@ -23,15 +25,35 @@ export class ModuleFormComponent {
 
   creerModule(e: Event) {
     // console.warn(this.fg.value);
+    let data : any = {
+      code: this.code,
+      titre: this.titre
+    }
     e.preventDefault();
-    this.httpService.creerModule(this.fg.value).subscribe({
+    this.httpService.creerModule(data, this.id_niveau ,this.id_resp).subscribe({
       next: res => {
         this.MessageService.add({ severity: 'success', summary: 'succès', detail: 'Le module a été créée avec succès', life: 2000 })
-        this.fg.reset();
       },
       error: err => {
         this.MessageService.add({ severity: 'danger', summary: 'erreur', detail: "quelque chose s'est mal passé", life: 2000 })
       }
     })
+  }
+
+  getResps(){
+    this.httpService.getEnseignants().subscribe({
+      next: (res) => this.resps = res
+    });
+  }
+
+  getNiveaux(){
+    this.httpService.getNiveaux().subscribe({
+      next: (res) => this.niveaux = res
+    });
+  }
+
+  ngOnInit(){
+    this.getResps();
+    this.getNiveaux();
   }
 }

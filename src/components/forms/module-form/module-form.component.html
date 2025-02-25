@@ -1,9 +1,9 @@
-<form [formGroup]="fg" (ngSubmit)="creerModule($event)"   class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
+<form (ngSubmit)="creerModule($event)"   class="w-full p-4 border border-gray-300 bg-white" action="#" method="post">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <!-- titre -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">titre</label>
-        <input type="text" formControlName="titre" name="titre"
+        <input type="text" [(ngModel)]="titre" name="titre"
           class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
@@ -11,28 +11,24 @@
       <!-- code -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">code</label>
-        <input type="text" formControlName="code" name="code"
+        <input type="text" [(ngModel)]="code" name="code"
           class="block w-full p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
 
       <!-- enseignant -->
       <div>
-        <label class="block mb-2 text-sm font-medium" for="">enseignant</label>
-        <select formControlName="enseignant"  name="enseignant" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5">
-            <option value="student" name="student"  selected>mohamed fahim</option>
-            <option value="teacher" name="teacher" >mohamed 1</option>
-            <option value="resp" name="resp">mohamed 2</option>
+        <label class="block mb-2 text-sm font-medium" for="">responsable</label>
+        <select [(ngModel)]="id_resp"  name="id_resp" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option *ngFor="let resp of resps" [value]="resp.id">{{resp.nom + " " + resp.prenom}}</option>
         </select>
       </div>
 
       <!-- niveau -->
       <div>
         <label class="block mb-2 text-sm font-medium" for="">niveau</label>
-        <select formControlName="niveau"  name="niveau" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5">
-            <option value="student" name="student"  selected>niveau 1</option>
-            <option value="teacher" name="teacher" >niveau 2</option>
-            <option value="resp" name="resp">niveau 3</option>
+        <select [(ngModel)]="id_niveau"  name="id_niveau" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option *ngFor="let niveau of niveaux" [value]="niveau.id">{{niveau.intitule}}</option>
         </select>
       </div>
 
