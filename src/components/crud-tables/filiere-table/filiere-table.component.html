@@ -1,37 +1,47 @@
-<table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
-    <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
-        <tr >
-            <th scope="col" class="px-6 py-3">intitulé</th>
-            <th scope="col" class="px-6 py-3">alias</th>
-            <th scope="col" class="px-6 py-3">année d’accréditation</th>
-            <th scope="col" class="px-6 py-3">année de fin d’accréditation</th>
-            <th scope="col" class="px-6 py-3">coordinateur</th>
-            <th scope="col" class="px-6 py-3">x</th>
-            <th scope="col" class="px-6 py-3">y</th>
-            <th scope="col" class="px-6 py-3">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let filiere of filieres" class="bg-white border-b">
-            <td class="px-6 py-4">{{filiere.intitule}}</td>
-            <td class="px-6 py-4">{{filiere.alias}}</td>
-            <td class="px-6 py-4">{{filiere.anne_accreditation}}</td>
-            <td class="px-6 py-4">{{filiere.anne_fin_accreditation}}</td>
-            @if(filiere.coordinateur != null){
-                <td class="px-6 py-4">{{filiere.coordinateur.nom + " " + filiere.coordinateur.prenom}}</td>
-            }@else {
-            <td class="px-6 py-4">-</td>
-            }
-            <td class="px-6 py-4">{{filiere.x}}</td>
-            <td class="px-6 py-4">{{filiere.y}}</td>
-            <td class="px-6 py-4">
-                <!-- <p-button (onClick)="showDialogView()"  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button> -->
-                <p-button (onClick)="showDialogEdit(filiere)"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                <p-button (onClick)="deleteFiliere(filiere.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<p-table
+#dt2
+stripedRows
+showGridlines
+[value]="filieres"
+dataKey="id"
+[rows]="5"
+[paginator]="true"
+[tableStyle]="{ 'min-width': '75rem' }"
+>
+<ng-template #header>
+    <tr>
+        <th>intitulé</th>
+        <th>alias</th>
+        <th>année d’accréditation</th>
+        <th>année de fin d’accréditation</th>
+        <th>coordinateur</th>
+        <th>x</th>
+        <th>y</th>
+        <th>Actions</th>
+    </tr>
+
+</ng-template>
+<ng-template #body let-filiere>
+    <tr>
+        <td>{{filiere.intitule}}</td>
+        <td>{{filiere.alias}}</td>
+        <td>{{filiere.anne_accreditation}}</td>
+        <td>{{filiere.anne_fin_accreditation}}</td>
+        @if(filiere.coordinateur != null){
+            <td>{{filiere.coordinateur.nom + " " + filiere.coordinateur.prenom}}</td>
+        }@else {
+        <td>-</td>
+        }
+        <td>{{filiere.x}}</td>
+        <td>{{filiere.y}}</td>
+        <td>
+            <!-- <p-button (onClick)="showDialogView()"  icon="pi pi-eye" [rounded]="true" [raised]="true"></p-button> -->
+            <p-button (onClick)="showDialogEdit(filiere)"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+            <p-button (onClick)="deleteFiliere(filiere.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+        </td>
+    </tr>
+</ng-template>
+</p-table>
 
 
 <!-- edit filiere -->

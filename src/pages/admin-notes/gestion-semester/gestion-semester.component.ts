@@ -11,10 +11,14 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpService } from '../../../services/http.service';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-gestion-semester',
-  imports: [ConfirmDialog, ToastModule, SideBarComponent, NavBarComponent, NgClass, FormsModule, Dialog, ButtonModule, ReactiveFormsModule, TagModule, NgFor],
+  imports: [ConfirmDialog, ToastModule, IconFieldModule, InputTextModule , InputIconModule,  TableModule, SideBarComponent, NavBarComponent, NgClass, FormsModule, Dialog, ButtonModule, ReactiveFormsModule, TagModule],
   templateUrl: './gestion-semester.component.html',
   providers: [ConfirmationService, MessageService]
 })

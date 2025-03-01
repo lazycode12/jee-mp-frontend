@@ -7,10 +7,11 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { NgFor } from '@angular/common';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-matiere-table',
-  imports: [ButtonModule,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule, NgFor],
+  imports: [ButtonModule,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule, TableModule],
   templateUrl: './matiere-table.component.html',
   providers: [MessageService, ConfirmationService]
 })

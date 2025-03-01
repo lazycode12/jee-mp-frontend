@@ -1,23 +1,32 @@
-<table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
-    <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
-        <tr>
-            <th scope="col" class="px-6 py-3">titre</th>
-            <th scope="col" class="px-6 py-3">module</th>
-            <th scope="col" class="px-6 py-3">actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let matiere of matieres" class="bg-white border-b">
-            <td class="px-6 py-4">{{matiere.titre}}</td>
-            <td class="px-6 py-4">{{matiere.module.titre}}</td>
-            <td class="px-6 py-4">
-                <p-button (onClick)="showDialogEdit(matiere)"   icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                <p-button (onClick)="deleteMatiere(matiere.id)"   icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
-            </td>
-        </tr>
+<p-table
+#dt2
+stripedRows
+showGridlines
+[value]="matieres"
+dataKey="id"
+[rows]="5"
+[paginator]="true"
+[tableStyle]="{ 'min-width': '75rem' }"
+>
+<ng-template #header>
+    <tr>
+        <th>titre</th>
+        <th>module</th>
+        <th>Actions</th>
+    </tr>
 
-    </tbody>
-</table>
+</ng-template>
+<ng-template #body let-matiere>
+    <tr>
+        <td class="px-6 py-4">{{matiere.titre}}</td>
+        <td class="px-6 py-4">{{matiere.module.titre}}</td>
+        <td class="px-6 py-4">
+            <p-button (onClick)="showDialogEdit(matiere)"   icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+            <p-button (onClick)="deleteMatiere(matiere.id)"   icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+        </td>
+    </tr>
+</ng-template>
+</p-table>
 
 <!-- show matiere -->
 <p-dialog header="voir" class="text-center" [modal]="true" [(visible)]="visible_view" [style]="{width: '30rem'}" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">

@@ -1,14 +1,24 @@
-<table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
-    <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
-        <tr>
-            <th scope="col" class="px-6 py-3">alias</th>
-            <th scope="col" class="px-6 py-3">filiere</th>
-            <th scope="col" class="px-6 py-3">niveau suivant</th>
-            <th scope="col" class="px-6 py-3">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let niveau of niveaux" class="bg-white border-b">
+<p-table
+#dt2
+stripedRows
+showGridlines
+[value]="niveaux"
+dataKey="id"
+[rows]="5"
+[paginator]="true"
+[tableStyle]="{ 'min-width': '75rem' }"
+>
+<ng-template #header>
+    <tr>
+        <th>alias</th>
+        <th>filiere</th>
+        <th>niveau suivant</th>
+        <th>Actions</th>
+    </tr>
+
+</ng-template>
+<ng-template #body let-niveau>
+    <tr>
             <td class="px-6 py-4">{{ niveau.alias }}</td>
             <td class="px-6 py-4">{{ niveau.filiere.alias }}</td>
             @if(niveau.niveauSuivant){
@@ -20,10 +30,9 @@
                 <p-button (onClick)="showDialogEdit(niveau)"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
                 <p-button (onClick)="deleteNiveau(niveau.id)" icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
             </td>
-        </tr>
-
-    </tbody>
-</table>
+    </tr>
+</ng-template>
+</p-table>
 <!-- edit niveau -->
 <p-dialog header="modifier" class="text-center" [modal]="true" [(visible)]="visible_edit" [style]="{width: '30rem'}" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
     <div class="flex justify-center text-left ">

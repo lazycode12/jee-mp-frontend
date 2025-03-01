@@ -2,18 +2,22 @@ import { Component, inject } from '@angular/core';
 import { SideBarComponent } from '../../../components/side-bar/side-bar.component';
 import { NavBarComponent } from '../../../components/nav-bar/nav-bar.component';
 import { SideBarDataServiceService } from '../../../services/side-bar-data-service.service';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpService } from '../../../services/http.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { TableModule } from 'primeng/table';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-gestion-etudiants',
-  imports: [SideBarComponent, NavBarComponent, NgClass, ConfirmDialog, DialogModule,ReactiveFormsModule, ToastModule, ButtonModule, NgFor],
+  imports: [SideBarComponent,InputTextModule,FormsModule, TableModule,IconFieldModule,InputIconModule,  NavBarComponent, NgClass,FormsModule, ConfirmDialog, DialogModule,ReactiveFormsModule, ToastModule, ButtonModule],
   templateUrl: './gestion-etudiants.component.html',
   providers: [MessageService, ConfirmationService]
 })
@@ -21,12 +25,16 @@ export class GestionEtudiantsComponent {
 
     sidebarItems: any = [];
     isOpen: boolean = true;
-    etudiants: any = [];
+    etudiants!: any;
     selectedEtudiant:any;
     visible_edit: boolean = false;
     visible_view: boolean = false;
     selecteedFile: File | null = null;
     niveaux: any;
+    loading: boolean = true;
+    selectedNiveauId: number | null = null;
+    selectedNiveau: string = "";
+    aliases: any = [];
 
     // services
     sideBarService: SideBarDataServiceService = inject(SideBarDataServiceService);
@@ -48,9 +56,13 @@ export class GestionEtudiantsComponent {
         this.getNiveaux()
     }
 
+
     getNiveaux(){
       this.httpService.getNiveaux().subscribe({
-        next: res => this.niveaux = res
+        next: res => {
+          this.niveaux = res;
+          this.aliases = res.map( (n:any) => n.alias)
+        }
       })
     }
 
@@ -72,6 +84,17 @@ export class GestionEtudiantsComponent {
         next: res => this.etudiants = res,
         error: err => console.log(err)
       })
+    }
+
+    // get etudiants by niveau id
+    onClasseChange(): void {
+      if (this.selectedNiveauId) {
+        this.httpService.getEtudiantsByNiveau(this.selectedNiveauId).subscribe({
+          next: data => this.etudiants = data}
+        )
+      } else {
+        this.etudiants = [];
+      }
     }
 
     edit(e: Event){

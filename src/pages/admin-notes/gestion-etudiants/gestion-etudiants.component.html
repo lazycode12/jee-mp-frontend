@@ -20,7 +20,7 @@
             <h2 class="mb-2 text-2xl">inscrire/réinscrire les etudiants</h2>
             <div class="rounded-xl p-4 h-fit grid grid-cols-1 gap-y-6">
                 <div class="  p-4 rounded-lg  border border-gray-300 bg-white">
-                    <h3 class="font-medium mb-4 text-black">choisir un fichier (.csv)</h3>
+                    <h3 class="font-medium mb-4 text-black">choisir un fichier excel</h3>
                     <div class="flex justify-start items-center gap-4 ">
                             <input (change)="onChange($event)" class="block w-1/3 p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none" type="file">
                             <p-button (onClick)="importer()" label="importer" icon="pi pi-upload" iconPos="right" size="small"></p-button>
@@ -31,43 +31,60 @@
 
         <div class="rounded-xl bg-white p-4 mt-4">
             <h2 class="mb-2 text-2xl">gere les etudiants</h2>
-            <div class="flex justify-between items-center mb-4">
-                <select *ngFor="let niveau of niveaux"   class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5" type="text">
-                    <option [value]="niveau.id">{{niveau.alias}}</option>
-                    <!-- <option *ngFor="let filiere of uniqueFilieres" [value]="filiere">{{filiere}}</option> -->
-                </select>
-                <input type="search" class="block w-1/3 p-2.5 text-sm border-gray-300 border rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="rechercher">
-            </div>
-            <table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
-                <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">id</th>
-                        <th scope="col" class="px-6 py-3">nom</th>
-                        <th scope="col" class="px-6 py-3">prenom</th>
-                        <th scope="col" class="px-6 py-3">cne</th>
-                        <th scope="col" class="px-6 py-3">niveau</th>
-                        <th scope="col" class="px-6 py-3">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let etudiant of etudiants" class="bg-white border-b">
-                        <td class="px-6 py-4">{{etudiant.id}}</td>
-                        <td class="px-6 py-4">{{etudiant.nom}}</td>
-                        <td class="px-6 py-4">{{etudiant.prenom}}</td>
-                        <td class="px-6 py-4">{{etudiant.cne}}</td>
-                        <td class="px-6 py-4">{{etudiant.niveau.intitule}}</td>
-                        <td class="px-6 py-4">
-                            <p-button (onClick)="showDialogEdit(etudiant)" icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                            <p-button (onClick)="deleteEtudiant(etudiant.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
-                        </td>
-                    </tr>
 
-                </tbody>
-            </table>
-        </div>
+        <p-table
+            #dt2
+            stripedRows
+            showGridlines
+            [value]="etudiants"
+            dataKey="id"
+            [rows]="5"
+            [paginator]="true"
+            [globalFilterFields]="['nom', 'prenom', 'cne', 'niveau.intitule', 'niveau.alias']"
+            [tableStyle]="{ 'min-width': '75rem' }"
+        >
+            <ng-template #caption>
+                <div class="flex">
+                    <p-iconfield iconPosition="left" class="ml-auto">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input
+                            pInputText
+                            #searchInput
+                            type="text"
+                            (input)="dt2.filterGlobal(searchInput.value, 'contains')"
+                            placeholder="recherche par mot-clé"
+                        />
+                    </p-iconfield>
 
-        <div class="flex justify-start items-center gap-4 ">
-            <p-button label="exporter cette list" icon="pi pi-file-export" iconPos="right" size="small"></p-button>
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+                    <th>id</th>
+                    <th>nom</th>
+                    <th>prenom</th>
+                    <th>cne</th>
+                    <th>niveau</th>
+                    <th>Actions</th>
+                </tr>
+
+            </ng-template>
+            <ng-template #body let-etudiant>
+                <tr>
+                    <td>{{ etudiant.id }}</td>
+                    <td>{{ etudiant.nom }}</td>
+                    <td>{{ etudiant.prenom }}</td>
+                    <td>{{ etudiant.cne }}</td>
+                    <td>{{ etudiant.niveau.intitule }}</td>
+                    <td>
+                        <p-button (onClick)="showDialogEdit(etudiant)" icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+                        <p-button (onClick)="deleteEtudiant(etudiant.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
         </div>
     </section>
     <!-- end account-creation-form -->

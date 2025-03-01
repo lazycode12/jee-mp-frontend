@@ -1,27 +1,36 @@
-<table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
-    <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
-        <tr>
-            <th scope="col" class="px-6 py-3">titre</th>
-            <th scope="col" class="px-6 py-3">code</th>
-            <th scope="col" class="px-6 py-3">enseignant</th>
-            <th scope="col" class="px-6 py-3">niveau</th>
-            <th scope="col" class="px-6 py-3">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let module of modules" class="bg-white border-b">
-            <td class="px-6 py-4">{{module.titre}}</td>
-            <td class="px-6 py-4">{{module.code}}</td>
-            <td class="px-6 py-4">{{module.resp.nom + " " + module.resp.prenom}}</td>
-            <td class="px-6 py-4">{{module.niveau.intitule}}</td>
-            <td class="px-6 py-4">
-                <p-button (onClick)="showDialogEdit(module)" icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                <p-button (onClick)="deleteModule(module.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
-            </td>
-        </tr>
+<p-table
+#dt2
+stripedRows
+showGridlines
+[value]="modules"
+dataKey="id"
+[rows]="5"
+[paginator]="true"
+[tableStyle]="{ 'min-width': '75rem' }"
+>
+<ng-template #header>
+    <tr>
+        <th>titre</th>
+        <th>code</th>
+        <th>enseignant</th>
+        <th>niveau</th>
+        <th>Actions</th>
+    </tr>
 
-    </tbody>
-</table>
+</ng-template>
+<ng-template #body let-module>
+    <tr>
+        <td class="px-6 py-4">{{module.titre}}</td>
+        <td class="px-6 py-4">{{module.code}}</td>
+        <td class="px-6 py-4">{{module.responsable.nom + " " + module.responsable.prenom}}</td>
+        <td class="px-6 py-4">{{module.niveau.intitule}}</td>
+        <td class="px-6 py-4">
+            <p-button (onClick)="showDialogEdit(module)" icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+            <p-button (onClick)="deleteModule(module.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+        </td>
+    </tr>
+</ng-template>
+</p-table>
 
 
 <!-- edit module -->

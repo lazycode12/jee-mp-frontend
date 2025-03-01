@@ -71,9 +71,14 @@ export class HttpService {
     return this.http.get<any>(this.baseUrl+"semestres", {headers: this.authHeader})
   }
 
-  // obtenir tous les enseignants
+  // obtenir tous les etudiants
   getEtudiants():Observable<any>{
     return this.http.get<any>(this.baseUrl+"etudiants", {headers: this.authHeader})
+  }
+
+  // obtenir tous les etudiants
+  getEtudiantsByNiveau(niveauId:number):Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}etudiants/niveau/${niveauId}`, {headers: this.authHeader})
   }
 
 

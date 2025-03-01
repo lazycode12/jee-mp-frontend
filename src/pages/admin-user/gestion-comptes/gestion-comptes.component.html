@@ -74,10 +74,10 @@
               <!-- role -->
               <div>
                 <label class="block mb-2 text-sm font-medium" for="">role</label>
-                <select formControlName="role" name="typeForm" class="w-full  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                    <option value="admin-sp">admin-sp</option>
-                    <option value="admin-user">admin-user</option>
-                    <option value="admin-notes">admin-notes</option>
+                <select formControlName="role" name="role" class="w-full  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                    <option value="ADMIN-SP">admin-sp</option>
+                    <option value="ADMIN-USER">admin-user</option>
+                    <option value="ADMIN-NOTES">admin-notes</option>
                 </select>
               </div>
 
@@ -90,7 +90,7 @@
               <!-- activé -->
               <div>
                 <label class="block mb-2 text-sm font-medium" for="">activé</label>
-                <select formControlName="active" name="active" class="w-full  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                <select formControlName="enabled" name="active" class="w-full  mb-3 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                     <option [value]="true" >oui</option>
                     <option [value]="false">non</option>
                 </select>
@@ -112,32 +112,6 @@
           </form>
     </p-dialog>
     <!-- end compte edit form popup -->
-
-    <!-- show compte -->
-    <p-dialog header="voir" class="text-center" [modal]="true" [(visible)]="visible_view" [style]="{width: '40vh'}" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
-      <div class="grid grid-cols-2">
-          <div class="flex justify-center text-left">
-              <div>
-                  <span class="block mb-3 font-semibold">nom</span>
-                  <span class="block mb-3 font-semibold">prenom</span>
-                  <span class="block mb-3 font-semibold">role</span>
-                  <span class="block mb-3 font-semibold">login</span>
-                  <span class="block mb-3 font-semibold">activé</span>
-                  <span class="block mb-3 font-semibold">verrouillé</span>
-              </div>
-          </div>
-          <div class="flex justify-center text-left">
-              <div>
-                  <span class="block mb-3">abde</span>
-                  <span class="block mb-3">fahim</span>
-                  <span class="block mb-3">-</span>
-                  <span class="block mb-3">-</span>
-                  <span class="block mb-3">-</span>
-                  <span class="block mb-3">-</span>
-              </div>
-          </div>
-      </div>
-    </p-dialog>
 
     <p-toast />
     <p-confirmdialog />

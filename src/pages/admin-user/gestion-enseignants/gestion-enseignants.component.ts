@@ -79,9 +79,9 @@ export class GestionEnseignantsComponent {
 
     this.httpservice.editEnseignant(this.selectedEnseignant.id, this.fg.value).subscribe({
       next: () => {
-        this.messageService.add({ severity: 'success', summary: 'succès', detail: 'La matière a été créée avec succès', life: 2000 })
-        this.fg.reset();
+        this.messageService.add({ severity: 'success', summary: 'succès', detail: "L'enseignant' a été créée avec succès", life: 2000 })
         this.getEnseigants();
+        this.fg.reset();
         this.visible_edit = false;
       }
     })

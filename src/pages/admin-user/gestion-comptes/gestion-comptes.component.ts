@@ -47,15 +47,15 @@ export class GestionComptesComponent {
 
   fg = new FormGroup({
     role : new FormControl(""),
-    active : new FormControl(""),
-    locked : new FormControl("")
+    enabled : new FormControl(false),
+    locked : new FormControl(false)
 
   })
 
   showEditDialog(user:any){
     let data = {
       role : user.role,
-      active : user.active,
+      enabled : user.enabled,
       locked : user.locked
     }
     this.fg.patchValue(data);

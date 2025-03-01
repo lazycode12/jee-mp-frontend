@@ -20,29 +20,56 @@
         </div>
 
         <div class="rounded-xl bg-white p-4 mt-4">
-            <table class="w-full text-sm text-left rtl:text-right text-black shadow-md mt-2">
-                <thead class="text-xs text-black uppercase bg-gray-200 shadow-md">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">semester</th>
-                        <th scope="col" class="px-6 py-3">session</th>
-                        <th scope="col" class="px-6 py-3">anne etude</th>
-                        <th scope="col" class="px-6 py-3">actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let semester of semestres" class="bg-white border-b">
-                        <td class="px-6 py-4">{{semester.semester}}</td>
-                        <td class="px-6 py-4">{{semester.session}}</td>
-                        <td class="px-6 py-4">{{semester.anneEtude}}</td>
 
-                        <td class="px-6 py-4">
-                            <p-button (onClick)="showDialogEdit(semester)"  icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
-                            <p-button (onClick)="deleteSemester(semester.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
-                        </td>
-                    </tr>
+            <p-table
+            #dt2
+            stripedRows
+            showGridlines
+            [value]="semestres"
+            dataKey="id"
+            [rows]="5"
+            [paginator]="true"
+            [globalFilterFields]="['semester', 'session', 'anneEtude']"
+            [tableStyle]="{ 'min-width': '75rem' }"
+        >
+            <ng-template #caption>
+                <div class="flex">
+                    <p-iconfield iconPosition="left" class="ml-auto">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input
+                            pInputText
+                            #searchInput
+                            type="text"
+                            (input)="dt2.filterGlobal(searchInput.value, 'contains')"
+                            placeholder="recherche par mot-clé"
+                        />
+                    </p-iconfield>
 
-                </tbody>
-            </table>
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+                    <th>semester</th>
+                    <th>session</th>
+                    <th>anne etude</th>
+                    <th>Actions</th>
+                </tr>
+
+            </ng-template>
+            <ng-template #body let-semester>
+                <tr>
+                    <td>{{ semester.semester }}</td>
+                    <td>{{ semester.session }}</td>
+                    <td>{{ semester.anneEtude}}</td>
+                    <td>
+                        <p-button (onClick)="showDialogEdit(semester)" icon="pi pi-pencil" [rounded]="true" [raised]="true"  severity="info" class="mx-3"></p-button>
+                        <p-button (onClick)="deleteSemester(semester.id)"  icon="pi pi-trash" [rounded]="true" [raised]="true"  severity="danger"></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
         </div>
 
     </section>

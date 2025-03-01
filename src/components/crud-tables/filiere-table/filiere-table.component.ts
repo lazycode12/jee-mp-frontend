@@ -7,10 +7,11 @@ import { DialogModule } from 'primeng/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpService } from '../../../services/http.service';
 import { NgFor } from '@angular/common';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-filiere-table',
-  imports: [ButtonModule,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule, NgFor],
+  imports: [ButtonModule, TableModule ,ConfirmDialog, ToastModule, DialogModule, ReactiveFormsModule],
   templateUrl: './filiere-table.component.html',
   providers: [MessageService, ConfirmationService]
 })
