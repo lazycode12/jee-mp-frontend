@@ -36,16 +36,15 @@ export class ImporterSPComponent {
   }
 
   importer_sp(){
-    console.log("clicked")
     if (!this.selecteedFile) {
       this.messageService.add({ severity: 'warn', summary: 'Attention', detail: "Aucun fichier sélectionné." });
       return;
     }
     this.httpService.import_sp(this.selecteedFile).subscribe({
-      next: () => {
-        this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Fichier téléchargé et traité avec succès" });
+      next: (res) => {
+        this.messageService.add({ severity: 'info', summary: 'Succès', detail: res.message });
       },
-      error: ()=>  this.messageService.add({ severity: 'error', summary: 'Succès.', detail: "Fichier téléchargé et traité avec succès" })
+      error: ()=>  this.messageService.add({ severity: 'error', summary: 'erreur.', detail: "quelque chose s'est mal passé" })
     })
   }
 }

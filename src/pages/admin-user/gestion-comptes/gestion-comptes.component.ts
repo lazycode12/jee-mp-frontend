@@ -70,12 +70,19 @@ export class GestionComptesComponent {
   edit(e:Event) {
     e.preventDefault();
     this.httpService.editCompte(this.selectedUser.id ,this.fg.value).subscribe({
-      next: (res:any) => {
+      next: () => {
         this.messageService.add({severity: 'success',summary: "Succès", detail: "compte a été modifié avec Succès"});
         this.visible_edit = false;
         this.getUsers();
       },
-      error: (err: any) => this.messageService.add({severity: 'error',summary: "Erreur", detail: "quelque chose s'est mal passé"})
+      error: () => this.messageService.add({severity: 'error',summary: "Erreur", detail: "quelque chose s'est mal passé"})
+    })
+  }
+
+  initPassword(): void{
+    this.httpService.initPassword(this.selectedUser.id).subscribe({
+      next: (res: any) => this.messageService.add({severity: 'success',summary: "Succès", detail: "nouveau mot de passe: "+ res.password}),
+      error: () => this.messageService.add({severity: 'error',summary: "Erreur", detail: "quelque chose s'est mal passé"})
     })
   }
 

@@ -239,9 +239,14 @@ export class HttpService {
     return this.http.get<any>(`${this.baseUrl}personnes/hasAccount?id=${id}` , {headers: this.authHeader});
   }
 
+  /* initialiser le mot de passe d'un utilisateur */
+  initPassword(id:number):Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}users/initpw?id=${id}` , {headers: this.authHeader});
+  }
+
   /* Réinitialiser le mot de passe d'un compte */
   resetPassword() : Observable<any>{
-    return this.http.get<any>(`${this.baseUrl}` , {headers: this.headers});
+    return this.http.get<any>(`${this.baseUrl}` , {headers: this.authHeader});
   }
 
   /* export collect marks file */
@@ -256,7 +261,7 @@ export class HttpService {
   importCollectNotesParModule(file: File) : Observable<any>{
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.http.post<any>(this.baseUrl+"excel/upload/collectnotes",formData)
+    return this.http.post<any>(this.baseUrl+"excel/upload/collectnotes",formData, {headers: this.authHeader})
   }
 
   /* export collect marks file */
@@ -271,19 +276,19 @@ export class HttpService {
   importDeliNotes(file: File) : Observable<any>{
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.http.post<any>(this.baseUrl+"excel/upload/delinotes",formData);
+    return this.http.post<any>(this.baseUrl+"excel/upload/delinotes",formData, {headers: this.authHeader});
   }
 
   import_sp(file: File) : Observable<any>{
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.http.post<any>(this.baseUrl+"excel/upload/sp",formData);
+    return this.http.post<any>(this.baseUrl+"excel/upload/sp",formData, {headers: this.authHeader});
   }
 
   import_inscription(file: File) : Observable<any>{
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.http.post<any>(this.baseUrl+"inscriptions/import",formData);
+    return this.http.post<any>(this.baseUrl+"inscriptions/import",formData, {headers: this.authHeader});
   }
   // // obtenir modules by niveau id
   // getModulesByNiveauId(id:number):Observable<any>{

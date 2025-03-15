@@ -84,7 +84,7 @@
               <!--  Réinitialiser le mot de passe  -->
               <div>
                 <label class="block mb-2 text-sm font-medium" for="">Réinitialiser le mot de passe </label>
-                <p-button icon="pi pi-sync" [rounded]="true" [raised]="true" severity="help" />
+                <p-button (onClick)="initPassword()" icon="pi pi-sync" [rounded]="true" [raised]="true" severity="help" />
               </div>
 
               <!-- activé -->

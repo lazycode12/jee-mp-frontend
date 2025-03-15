@@ -97,11 +97,11 @@ export class GestionNotesComponent {
     importCollectNotes(){
       if(this.selectedImportCollectNotesParModuleFile){
         this.httpservice.importCollectNotesParModule(this.selectedImportCollectNotesParModuleFile).subscribe({
-          next: () => {
-            this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Fichier téléchargé et traité avec succès" });
+          next: (res) => {
+            this.messageService.add({ severity: 'info', summary: 'Succès', detail: res.message });
             this.import_notes_module_v = false;
         },
-          error: ()=>  this.messageService.add({ severity: 'success', summary: 'Succès.', detail: "Fichier téléchargé et traité avec succès" })
+          error: ()=>  this.messageService.add({ severity: 'error', summary: 'erreur.', detail: "quelque chose s'est mal passé" })
         })
       }
     }
@@ -109,11 +109,11 @@ export class GestionNotesComponent {
     importDeliNotes(){
       if(this.selectedDeliNotesFile){
         this.httpservice.importDeliNotes(this.selectedDeliNotesFile).subscribe({
-          next: () => {
-            this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Fichier téléchargé et traité avec succès" });
+          next: (res) => {
+            this.messageService.add({ severity: 'info', summary: 'Succès', detail: res.message });
             this.import_notes_deli_v = false;
         },
-          error:()=> this.messageService.add({ severity: 'success', summary: 'Succès', detail: "Fichier téléchargé et traité avec succès" })
+          error:()=> this.messageService.add({ severity: 'error', summary: 'erreur', detail: "quelque chose s'est mal passé" })
         })
       }
     }
